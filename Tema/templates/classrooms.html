@@ -1,0 +1,152 @@
+{% extends "app_layout.html" %}
+{% block app %}
+<span id='user_id' value='{{ current_user.get_id() }}'></span>
+<div class="channel_display" id=channel_display>
+	<span>
+		<div class="upper_part">
+			<p class=title>
+				No channel to display...
+			</p>
+			<div class='float-right'> </div>
+		</div>
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+		  <li class="nav-item">
+		    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts"
+               aria-selected="true">Posts</a>
+		  </li>
+		  <li class="nav-item">
+		  	<a class="nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes"
+               aria-selected="true">Notes</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="assignments-tab" data-toggle="tab" href="#assignments" role="tab"
+               aria-controls="assignments" aria-selected="false">Assignments</a>
+		  </li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+		  	<div class='messagescontainer'>
+				<div class="message bg-light"><span><b>SC. Bot</b> just now.</span><p>No messages to display...</p></div>
+			</div>
+			<button class='btn btn-primary' id='newconversation'>New conversation</button>
+			<form method='POST' id='new_conversation_form'>
+				<label for=new_conversation_input></label><input id=new_conversation_input type='text'
+                                                                 placeholder="Start a new conversation."
+                                                                 class='textinput'>
+			</form>
+		  </div>
+		  <div class="tab-pane fade" id="assignments" role="tabpanel" aria-labelledby="assignments-tab">
+			<table class="table table-sm">
+			  <thead>
+			    <tr>
+			      <th scope="col">Text</th>
+			      <th scope="col">Due</th>
+			      <th scope="col">submission</th>
+			    </tr>
+			  </thead>
+			  <tbody id='assignments-list'>
+			  </tbody>
+			</table>
+			<form method='POST' id='assignment_form'>
+				<label>
+                    <input type='text' name='assignment_text'>
+                    </label>
+                                    <label>
+                    <input type="date" name='assignment_date'>
+                    </label>
+				<label for='selected_channel_input'></label><input style='display: none' id='selected_channel_input'
+                                                                   name='channel_id'>
+				<input type="submit" name="">
+			</form>
+			<div>
+				<table id='submissions'>
+					<!-- here goes submissions :3 -->
+				</table>
+			</div>
+		  </div>
+		  <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab" style='margin-top: 5px;'>
+			<div id=notes_container>
+				<div class="row">
+				  <div class="col-2">
+				    <div class="list-group" id="note-list" role="tablist">
+				    	<!--Here goes title of the note-->
+				    </div>
+
+				  </div>
+					<div class="col-7">
+					    <div class="tab-content" id="note-container">
+					    	<!--here goes text and image of the note-->
+					  	</div>
+					</div>
+				</div>
+			</div>
+
+
+			<form id=note_form class="form-inline" method="POST" enctype="multipart/form-data">
+				<div class="input-group">
+				  <label>
+                    <textarea type="text" class="form-control" placeholder="Note title goes here"
+                              name='note_title'></textarea>
+                    </label>
+				  <textarea type="text" class="form-control" placeholder="Note text goes here"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2"
+                            name="note_text"></textarea>
+			      <input type="file" name=note_image class="btn btn-outline-secondary" value="Upload a picture"
+						 accept="image/*">
+			      <input type=submit class="btn btn-outline-secondary">
+				</div>
+			</form>
+
+
+		  </div>
+		</div>
+	</span>
+	<div id="classroom_settings" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="close_settings_menu()">&times;</a>
+		<div class="overlay-content">
+			<p><b>Classroom code:</b> <span id='code_id'>...</span></p>
+			<div style="text-align: center">
+				<button class='btn btn-primary' id='leave_classroom'>Leave classroom</button>
+				<button class='btn btn-primary permission' id='regenerate_code'>Regenerate code</button>
+
+			</div>
+			<hr class="permission">
+			<p class="action-title permission">Channels:</p>
+			<div class="action-container permission">
+				<label for=action_selection></label><select class="form-control" id=action_selection>
+				<option>action</option>
+				<option>rename</option>
+				<option>delete</option>
+				<option>add</option>
+			</select><br>
+				<label for=channel_selection></label><select class="form-control" id=channel_selection>
+				<option>none</option>
+			</select>
+				<br>
+				<label for='name_input'></label><input class='form-control' id='name_input' type='text'
+													   placeholder="Enter the name you wish to use"
+													   style='display:none;'>
+				<br>
+				<input id='channels_action_submission_button' type='button' value='submit action'
+					   class="btn btn-primary">
+			</div>
+			<hr class="permission">
+			<p class="action-title permission">Users:</p>
+			<div class="action-container permission">
+				<label for=action_selection_users></label><select class="form-control" id=action_selection_users>
+				<option>action</option>
+				<option>kick</option>
+			</select>
+				<br>
+				<label for=user_selection></label><select class="form-control" id=user_selection>
+				<option>none</option>
+			</select>
+				<br><input id='users_action_submission_button' type='button' value='submit action'
+						   class="btn btn-primary">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock app %}
