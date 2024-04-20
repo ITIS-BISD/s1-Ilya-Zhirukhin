@@ -1,5 +1,5 @@
 # s1-Ilya-Zhirukhin
-s1-Ilya-Zhirukhin created by GitHub Classroom
+s1-Ilya-Zhirukhin 
 ## Description
 Проект пародия тимса, имеет:
 1. Профиль с полным CRUD
