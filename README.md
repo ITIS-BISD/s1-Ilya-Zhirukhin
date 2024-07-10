@@ -6,6 +6,7 @@
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/49c4784e-6302-4c57-8295-0b7682853fd8)
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/b8748385-b6f6-4583-aceb-19046b646b4a)
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/de47f6ee-cc9b-4890-982d-04313ca2b358)
+![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/8f3f6c5f-9e9a-4758-8ba4-89c253f3544f)
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/49cb9715-bc65-4a3f-aaab-8fa414b658b2)
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/bb0aeb4b-73d3-4f65-b64c-d64fe81254b7)
 ![image](https://github.com/ITIS-BISD/s1-Ilya-Zhirukhin/assets/99948155/f4990dea-161d-4a32-9075-f4da18454e3a)
