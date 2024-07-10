@@ -339,8 +339,10 @@ def delete_profile():
 @app.route('/join-team', methods=['POST'])
 def join_team():
     team_code = request.form['code']
+    print(team_code)
     if team_code:
         classroom_id = Classroom.query.filter(Classroom.code == team_code).first()
+        print(classroom_id)
         if classroom_id:
             new_membership = Membership(user_id=current_user.get_id(), classroom_id=classroom_id.id, role='regular')
             db.session.add(new_membership)
@@ -387,6 +389,7 @@ def retrieve_directmessages(user_id):
     messages = DirectMessage.query.filter(
         (DirectMessage.sender_id == user_id) & (DirectMessage.receiver_id == current_user.get_id()) | (
                     DirectMessage.sender_id == current_user.get_id()) & (DirectMessage.receiver_id == user_id))
+    print("fack off")
     return jsonify({'messages': [{'content': message.content, 'date': message.date,
                                   'author': User.query.filter(User.id == message.sender_id).first().username,
                                   'mein': int(current_user.get_id()) == (message.sender_id)} for message in messages]})
@@ -490,6 +493,7 @@ def create_team():
         db.session.add(new_classroom)  # adding the new classroom
         db.session.flush()  # using flush just so we can get the id of the classroom
         new_classroom.code = generate_code(new_classroom.id)
+        print(new_classroom.code)
         db.session.flush()
         new_channel = Channel(name="General",
                               classroom_id=new_classroom.id)  # creating general channel for the classroom

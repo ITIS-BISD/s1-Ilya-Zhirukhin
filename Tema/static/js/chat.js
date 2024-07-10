@@ -52,6 +52,7 @@ $(document).on('click', '.user', function () {
     // Сохраняем выбранный идентификатор контакта в переменной selected_user.
     selected_user = id;
     this_element = $(this);
+    console.log(1)
     // Отправляем AJAX POST-запрос на сервер для получения сообщений с выбранным контактом.
     $.ajax({url: `retrieve-directmessages/${id}`, type: 'POST'}).done(function (data) {
         console.log(data);

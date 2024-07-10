@@ -67,6 +67,7 @@ def handle_conversations(data):
 @socketio.on('join-room')
 def joinroom(room_id):
     if current_user.is_authenticated:
+        print("ok")
         join_room(str(room_id))
 
 

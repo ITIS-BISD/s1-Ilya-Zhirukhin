@@ -17,11 +17,6 @@ app.config['IMAGE_UPLOADS'] = join(dirname(realpath(__file__)), 'static/imgs/')
 app.config['FILE_UPLOADS'] = join(dirname(realpath(__file__)), 'static/submissions/')
 app.config['UPLOAD_FOLDER'] = join(dirname(realpath(__file__)), 'static/upload_user')
 
-#
-# app.config['GITHUB_CLIENT_ID'] = 'fcea9d2bf64321447a57'
-# app.config['GITHUB_CLIENT_SECRET'] = '64e2c48ba1b1c3f9c0dfde7417a96014bb544113'
-
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.sqlite3'
 db = SQLAlchemy(app)
@@ -35,5 +30,6 @@ login_manager.login_view = 'login'
 from Tema.routes import *
 from Tema.models import User
 from Tema.network import *
+
 with app.app_context():
     db.create_all()
