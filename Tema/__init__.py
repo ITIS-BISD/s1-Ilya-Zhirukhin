@@ -1,15 +1,13 @@
-from flask import Flask, url_for
+import eventlet
+eventlet.monkey_patch()
+
+from flask import Flask, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 from os.path import join, dirname, realpath
-from flask import Flask, redirect, url_for, render_template
 from flask_dance.contrib.github import make_github_blueprint, github
-
-
-import eventlet
-eventlet.monkey_patch()
 
 app = Flask(__name__, template_folder="templates")
 app.config['SECRET_KEY'] = 'R\x1a^-\x14?mq\x1ce\xf7\xefi\xb7\x0e\xa0\x02\x0c\xd6-$\x033\xc4'
