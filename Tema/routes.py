@@ -381,8 +381,7 @@ def app_chats():
 def add_contact():
     contact = User.query.filter(User.username == request.form['username']).first()
     if contact and int(contact.id) == int(current_user.get_id()):
-        contact = None
-        print(contact.image_file)#
+        contact = None  #
     return jsonify({'name': contact.username, 'id': contact.id, 'img_url': url_for('static',
                                                                                    filename='imgs/' + contact.image_file )}) if contact and contact.id != current_user.get_id() else jsonify(
         {'error': 'user not found.'})
@@ -596,12 +595,10 @@ def app_activity():
     messages = Message.query.filter(Message.author_id == current_user.get_id())
     return render_template('activity.html', data=messages)
 
-
+@app.route('/app/meetings', methods=['POST'])
+def app_meetings():
+    return render_template('meetings.html')
 
 @app.route('/app/calls', methods=['POST'])
 def app_calls():
     return render_template('calls.html')
-
-
-
-
