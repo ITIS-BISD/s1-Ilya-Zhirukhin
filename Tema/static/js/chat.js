@@ -37,8 +37,17 @@ $(document).on('submit', '#username_input_id', function (event) {
         if (data.error) {
             console.log(data.error);
         } else {
+            console.log(data)
             // Если добавление контакта прошло успешно, добавляем ссылку на контакт в блок меню.
-            $('#menulist').append(`<div><a class="w3-bar-item w3-button user" id='*${data.id}' style='text-decoration:none'><img width=35 class="user-avatar" src="${data.img_url}"> ${data.name}</a></div>`);
+            $('#menulist').append(`
+                <div class="user-container">
+                    <a class="w3-bar-item w3-button user" id='*${data.id}' style='text-decoration: none'>
+                    <div class="user-avatar-wrapper">
+                        <img class='user-avatar' src="${data.img_url}">
+                    </div>
+                <div class="user-name"> ${data.name} </div>
+                     </a>
+              </div>`);
         }
     });
     $('#username_input').val('');

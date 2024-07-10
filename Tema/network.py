@@ -31,6 +31,7 @@ def handle_connections():
      user_memberships]  # Instead of making a room for every channel we will make a room for every classroom
 
 
+
 @socketio.on('disconnect')
 def handle_disconnections():
     if not current_user.is_authenticated:

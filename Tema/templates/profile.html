@@ -61,10 +61,14 @@
 
 
     .profile-avatar-2 img {
-        width: 350px; /* Задайте желаемую ширину */
-        height: 200px; /* Задайте желаемую высоту */
-        object-fit: cover; /* Подгоняет изображение в соответствии с заданными размерами */
-        border-radius: 10%; /* Опционально: добавляет закругленные углы для круглого аватара */
+        
+        overflow: hidden;
+        border-radius: 40%; /* Делаем круглое изображение */
+        margin: 0 auto;
+        width: 50%;
+        height: auto; /* Заполняем всю ширину круга изображением */
+         /* Автоматический расчет высоты */
+        display: block; /* Опционально: добавляет закругленные углы для круглого аватара */
     }
 
 
@@ -93,111 +97,181 @@
         color: #fffefe; /* Черный цвет текста */
     }
 
+    /* Общие стили для центрирования */
+    .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .profile-container {
+        width: 100%; /* Чтобы занимал всю ширину экрана */
+        max-width: 1200px; /* Максимальная ширина контейнера */
+        margin: 0 auto; /* Центрируем контейнер по горизонтали */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .profile-card {
+        width: 100%; /* Занимает всю доступную ширину в контейнере */
+        max-width: 600px; /* Ограничиваем максимальную ширину карточки */
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+    }
+
+    .profile-avatar-2 {
+        text-align: center; /* Центрируем аватар по горизонтали */
+        margin-top: 10px;
+    }
+    .user-container {
+        text-align: center; /* Центрируем содержимое по горизонтали */
+    }
+
+    .user-avatar-wrapper-2 {
+        width: 35px; /* Размер круга, в котором будет изображение */
+        height: 35px;
+        overflow: hidden;
+        border-radius: 50%; /* Делаем круглое изображение */
+        margin: 0 auto; /* Центрируем круг по горизонтали */
+    }
+
+    .user-avatar-2 {
+        width: 100%; /* Заполняем всю ширину круга изображением */
+        height: auto; /* Автоматический расчет высоты */
+        display: block; /* Убираем пустые промежутки */
+    }
+
+    .user-name {
+        margin-top: 5px; /* Отступ между изображением и именем */
+    }
+    .user-avatar-wrapper {
+        width: 100px; /* Размер круга, в котором будет изображение */
+        height: 100px;
+        overflow: hidden;
+        border-radius: 50%; /* Делаем круглое изображение */
+        margin: 0 auto; /* Центрируем круг по горизонтали */
+    }
+    
+    .user-avatar {
+        width: 100%; /* Заполняем всю ширину круга изображением */
+        height: auto; /* Автоматический расчет высоты */
+        display: block; /* Убираем пустые промежутки */
+        object-fit: cover; /* Подгоняем изображение под размеры круга */
+    }
+    
 
 </style>
 
-
-<!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-
+    <a class="navbar-brand" href="{{url_for('__app__')}}">TEMA</a>
+    <a class="navbar-brand" href="{{url_for('logout')}}">Logout</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('__app__')}}">Home</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('user_profile')}}">Profile</a>
-            </li>
-            <li class="profile-avatar-move">
-                <div class="profile-avatar">
-                    <a href="{{ url_for('user_profile') }}">
-                        <img
-                                src="{{ url_for('static', filename='imgs/' + user.image_file) }}"
-                                alt="Аватар">
-                    </a>
-                </div>
-            </li>
-
-
-        </ul>
-    </div>
-</nav>
-
-
-<div class="profile-container">
-    <div class="profile-card">
-        <h1 class="profile-title">Профиль пользователя</h1>
-        {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{ cat }}">{{ msg }}</div>
-        {% endfor %}
-
-
-
-        <div class="profile-info">
-            <div class="profile-info-item">
-                <span class="profile-info-label">Имя:</span>
-                <span class="profile-info-value">{{ user.first_name }}</span>
-            </div>
-            <div class="profile-info-item">
-                <span class="profile-info-label">Фамилия:</span>
-                <span class="profile-info-value">{{ user.last_name }}</span>
-            </div>
-            <div class="profile-info-item">
-                <span class="profile-info-label">Имя пользователя:</span>
-                <span class="profile-info-value">{{ user.username }}</span>
-            </div>
-            <div class="profile-info-item">
-                <span class="profile-info-label">Email:</span>
-                <span class="profile-info-value">{{ user.email }}</span>
-            </div>
-
-
-            <div class="profile-actions">
-                {#кнопка "Редактировать профиль" должна вызывать функцию, которая показывает модальное окно#}
-                <!-- Добавьте кнопку с вызовом функции showModal() -->
-                <a href="#" class="btn btn-warning" onclick="showModal()">Редактировать профиль</a>
-
-                <div id="edit-profile-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeModal()">&times;</span>
-                        <div id="edit-profile-content"></div>
+      <ul class="navbar-nav mr-auto">
+        
+        
+  
+        
+        <li>
+            <div class="user-container-2">
+                <a class="w3-bar-item w3-button user" id="*{{user.id}}" style='text-decoration: none; display: inline-block;'>
+                    <div class="user-avatar-wrapper-2">
+                        <img class='user-avatar-2' src="{{url_for('static', filename='imgs/' + user.image_file)}}">
                     </div>
+                    <div class="user-name">{{user.name}}</div>
+                </a>
+            </div>
+        </li>
+  
+  
+      </ul>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+  
+  
+  
+  
+  
+  
+
+  <div class="centered-container">
+    <div class="profile-container">
+        <div class="profile-card">
+
+            <h1 class="profile-title">Профиль пользователя</h1>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+            {% endfor %}
+
+
+
+            <div class="profile-info">
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Имя:</span>
+                    <span class="profile-info-value">{{ user.first_name }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Фамилия:</span>
+                    <span class="profile-info-value">{{ user.last_name }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Имя пользователя:</span>
+                    <span class="profile-info-value">{{ user.username }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Email:</span>
+                    <span class="profile-info-value">{{ user.email }}</span>
                 </div>
 
-                <a href="#" class="btn btn-danger" id="delete-profile-btn">Удалить профиль</a>
-                <a href=" {{ url_for('__app__') }}" class="btn btn-primary">Назад в будущее</a>
 
+                <div class="profile-actions">
+                    {#кнопка "Редактировать профиль" должна вызывать функцию, которая показывает модальное окно#}
+                    <!-- Добавьте кнопку с вызовом функции showModal() -->
+                    <a href="#" class="btn btn-warning" onclick="showModal()">Редактировать профиль</a>
+
+                    <div id="edit-profile-modal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <div id="edit-profile-content"></div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-danger" id="delete-profile-btn">Удалить профиль</a>
+                
+
+
+                </div>
 
             </div>
 
+            
 
+            <div class="user-avatar-wrapper">
+                <img class="user-avatar" src="{{ url_for('static', filename='imgs/' + user.image_file) }}">
+            </div>
+
+
+            <div class="profile-upload">
+                <form id="profile-upload-form" action="{{ url_for('upload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Изменить аватар:</label>
+                        <input type="file" name="file" id="profile-file-input" class="form-control-file">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Загрузить" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        
 
         </div>
-
-        <div class="profile-avatar-2">
-            <img id="profile-avatar-img" src="{{ url_for('static', filename='imgs/' + user.image_file) }}"
-                 alt="Аватар">
-        </div>
-
-
-        <div class="profile-upload">
-            <form id="profile-upload-form" action="{{ url_for('upload') }}" method="POST"
-                  enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file">Изменить аватар:</label>
-                    <input type="file" name="file" id="profile-file-input" class="form-control-file">
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Загрузить" class="btn btn-primary">
-                </div>
-            </form>
-        </div>
-    </div>
-
 
     <div>
         <!-- Кнопки JSON API -->

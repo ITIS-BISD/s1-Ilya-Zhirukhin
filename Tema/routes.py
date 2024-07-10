@@ -82,6 +82,7 @@ def login():
         return redirect(url_for('home'))
 
     form = LoginForm()
+    form_2 = RegistrationForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -371,16 +372,19 @@ def app_chats():
         contact = SimpleNamespace()
         contact.id = user.id
         contact.name = user.username
+        contact.image_file = user.image_file
         contacts.append(contact)
+        
     return render_template('chats.html', title='Contacts', data=contacts, type='contact')
 
 @app.route('/add-contact', methods=['POST'])
 def add_contact():
     contact = User.query.filter(User.username == request.form['username']).first()
     if contact and int(contact.id) == int(current_user.get_id()):
-        contact = None  #
+        contact = None
+        print(contact.image_file)#
     return jsonify({'name': contact.username, 'id': contact.id, 'img_url': url_for('static',
-                                                                                   filename='imgs/defaultuser-icon.png')}) if contact and contact.id != current_user.get_id() else jsonify(
+                                                                                   filename='imgs/' + contact.image_file )}) if contact and contact.id != current_user.get_id() else jsonify(
         {'error': 'user not found.'})
 
 
@@ -592,10 +596,12 @@ def app_activity():
     messages = Message.query.filter(Message.author_id == current_user.get_id())
     return render_template('activity.html', data=messages)
 
-@app.route('/app/meetings', methods=['POST'])
-def app_meetings():
-    return render_template('meetings.html')
+
 
 @app.route('/app/calls', methods=['POST'])
 def app_calls():
     return render_template('calls.html')
+
+
+
+

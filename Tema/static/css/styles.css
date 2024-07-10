@@ -166,10 +166,23 @@
 .action-title {
 	font-weight: bold;
 }
-.user-avatar {
-	border-radius: 4px;
+.user-container {
+    text-align: center; /* Центрируем содержимое по горизонтали */
 }
 
+.user-avatar-wrapper {
+    width: 70px; /* Размер круга, в котором будет изображение */
+    height: 70px;
+    overflow: hidden;
+    border-radius: 50%; /* Делаем круглое изображение */
+    margin: 0 auto; /* Центрируем круг по горизонтали */
+}
+
+.user-avatar {
+    width: 100%; /* Заполняем всю ширину круга изображением */
+    height: auto; /* Автоматический расчет высоты */
+    display: block; /* Убираем пустые промежутки */
+}
 
 
 

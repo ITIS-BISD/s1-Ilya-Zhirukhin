@@ -1,3 +1,33 @@
+<head>
+    <style>
+        .user-container {
+            text-align: center; /* Центрируем содержимое по горизонтали */
+        }
+
+        .user-avatar-wrapper {
+            width: 70px; /* Размер круга, в котором будет изображение */
+            height: 70px;
+            overflow: hidden;
+            border-radius: 50%; /* Делаем круглое изображение */
+            margin: 0 auto; /* Центрируем круг по горизонтали */
+        }
+
+        .user-avatar {
+            width: 100%; /* Заполняем всю ширину круга изображением */
+            height: auto; /* Автоматический расчет высоты */
+            display: block; /* Убираем пустые промежутки */
+        }
+
+        .user-name {
+            margin-top: 5px;
+            text-align: center; /* Отступ между изображением и именем */
+        }
+    </style>
+
+</head>
+
+
+
 <div class="w3-sidebar w3-bar-block my_second_sidebar" style='background-color: rgb(223, 231, 232);'>
     <div class='titlesection'>
         <h4 id=sidebartitle>{{title}}</h4>
@@ -17,11 +47,17 @@
             </form>
         </div>
         {% for item in data %}
-        <div>
-            <a class="w3-bar-item w3-button user" id="*{{item.id}}" style='text-decoration: none; width:100%'><img
-                    width=35 class='user-avatar' src="{{url_for('static', filename='imgs/defaultuser-icon.png')}}">
-                {{item.name}}</a>
+        <div class="user-container">
+            <a class="w3-bar-item w3-button user" id="*{{item.id}}" style='text-decoration: none; display: inline-block;'>
+                <div class="user-avatar-wrapper">
+                    <img class='user-avatar' src="{{url_for('static', filename='imgs/' + item.image_file)}}">
+                    
+                </div>
+                <div class="user-name">{{item.name}}</div>
+                
+            </a>
         </div>
+        
         {% endfor %}
     </div>
 </div>
