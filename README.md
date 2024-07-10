@@ -32,8 +32,8 @@ s1-Ilya-Zhirukhin
 
 Проект использует следующие библиотеки и модули:
 
-- `bcrypt` 4.1.3
-- `bcryct` 0.22.1
+- `flask_bcrypt` 0.7.1
+- `bcrypt`3.2.0
 - `blinker` 1.6.3
 - `cachelib` 0.10.2
 - `certifi` 2024.6.2
