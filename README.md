@@ -33,7 +33,7 @@ s1-Ilya-Zhirukhin
 Проект использует следующие библиотеки и модули:
 
 - `bcrypt` 4.1.3
-- `bidict` 0.22.1
+- `bcryct` 0.22.1
 - `blinker` 1.6.3
 - `cachelib` 0.10.2
 - `certifi` 2024.6.2
