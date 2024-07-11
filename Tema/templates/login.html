@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        background-image: linear-gradient(to bottom, #2980b9, #fff);
+
+    }
+
+    .content-section {
+        min-height: 100%;
+        margin-bottom: 0;
+    }
+
+    .card {
+        width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        background: linear-gradient(45deg, #e0e0e0, #f9f9f9);
+    }
+
+    .card-body {
+        position: relative;
+        z-index: 1;
+    }
+
+    .form-group label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 40px;
+        border: none;
+        background-color: #f3f3f3;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+    }
+
+    .btn:hover {
+        background-color: #555;
+    }
+
+    .flash {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .flash.error {
+        background-color: #c95f5f; /* Красный цвет для сообщений с категорией "error" */
+        color: #ffffff; /* Белый цвет текста для лучшей читаемости */
+    }
+
+    .flash.success {
+        background-color: #5ace5a; /* Зеленый цвет для других сообщений */
+        color: #fffefe; /* Черный цвет текста */
+    }
+
+
+</style>
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+
+<div class='content-section'>
+    <div class='container'>
+        <div class='card'>
+            <div class='card-body'>
+                <form method='POST' action=''>
+                    <fieldset class='form-group'>
+                        {{ form.hidden_tag() }}
+                        <div class='form-group'>
+                            {{ form.email.label(class="form-control-label") }}
+                            {{ form.email(class="form-control form-control-lg") }}
+                            {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class='form-group'>
+                            {{ form.password.label(class="form-control-label", placeholder='test') }}
+                            {{ form.password(class="form-control form-control-lg") }}
+                            {% if form.password.errors %}
+                            {% for error in form.password.errors %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('reset_password') }}">Забыли пароль?</a>
+
+
+                        <div class='form-group'>
+                            {{ form.remember.label(class="form-control-label") }}
+                            {{ form.remember }}
+                        </div>
+                        <div class='form-group'>
+                            {{ form.submit(class="btn btn-outline-info") }}
+
+                            <a href="{{ url_for('register') }}" class="btn btn-primary">Reg</a>
+                        </div>
+
+                        <!-- Add this code after the login form -->
+                        <div>
+                            <a href="{{ github_login_url }}">
+                                <img src="{{ url_for('static', filename='imgs/free-icon-github-536452.png') }}"
+                                     alt="Github" width="50" height="50">
+                            </a>
+
+                            <a href="{{ url_for('login_yandex') }}">
+                                <img src="{{ url_for('static', filename='imgs/free-icon-yandex-5969001.png') }}"
+                                     alt="Yandex" width="50" height="50">
+                            </a>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

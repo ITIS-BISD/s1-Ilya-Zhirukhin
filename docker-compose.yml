@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 3778:3778
+    volumes:
+      - ./run.py:/app/run.py
+      - ./requirements.txt:/app/requirements.txt
+      - ./Tema/site.sqlite3:/app/Tema/site.sqlite3
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    depends_on:
+      - db
+  db:
+    image: sqlite:latest
+    volumes:
+      - ./Tema/site.sqlite3:/app/Tema/site.sqlite3
+
+volumes:
+  db-data:
+
+
+  

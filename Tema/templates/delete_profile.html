@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Удаление профиля</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        <p>Вы действительно хотите удалить профиль?</p>
+    </div>
+    <div>
+        {{ form.submit() }}
+        <a href="{{ url_for('user_profile') }}" class="btn btn-secondary">Нет</a>
+    </div>
+</form>
+
+
+{% endblock %}

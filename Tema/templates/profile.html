@@ -1,0 +1,434 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+<style>
+    #json-output {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre-wrap;
+    }
+
+    .json-api-buttons {
+        margin-top: 40px;
+    }
+
+
+    .profile-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .profile-card {
+        width: 400px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+    }
+
+    .profile-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-info {
+        margin-bottom: 20px;
+    }
+
+    .profile-info-item {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .profile-info-label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .profile-avatar img {
+        width: 100px;
+        height: 75px;
+        object-fit: cover; /* Подгоняет изображение в соответствии с заданными размерами */
+        border-radius: 20%; /* Опционально: добавляет закругленные углы для круглого аватара */
+    }
+
+
+    .profile-avatar-2 img {
+        
+        overflow: hidden;
+        border-radius: 40%; /* Делаем круглое изображение */
+        margin: 0 auto;
+        width: 50%;
+        height: auto; /* Заполняем всю ширину круга изображением */
+         /* Автоматический расчет высоты */
+        display: block; /* Опционально: добавляет закругленные углы для круглого аватара */
+    }
+
+
+    .profile-upload {
+        text-align: center;
+    }
+
+    .profile-avatar-move {
+        margin-left: 500px;
+    }
+
+    .flash {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .flash.error {
+        background-color: #c95f5f; /* Красный цвет для сообщений с категорией "error" */
+        color: #ffffff; /* Белый цвет текста для лучшей читаемости */
+    }
+
+    .flash.success {
+        background-color: #5ace5a; /* Зеленый цвет для других сообщений */
+        color: #fffefe; /* Черный цвет текста */
+    }
+
+    /* Общие стили для центрирования */
+    .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .profile-container {
+        width: 100%; /* Чтобы занимал всю ширину экрана */
+        max-width: 1200px; /* Максимальная ширина контейнера */
+        margin: 0 auto; /* Центрируем контейнер по горизонтали */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .profile-card {
+        width: 100%; /* Занимает всю доступную ширину в контейнере */
+        max-width: 600px; /* Ограничиваем максимальную ширину карточки */
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+    }
+
+    .profile-avatar-2 {
+        text-align: center; /* Центрируем аватар по горизонтали */
+        margin-top: 10px;
+    }
+    .user-container {
+        text-align: center; /* Центрируем содержимое по горизонтали */
+    }
+
+    .user-avatar-wrapper-2 {
+        width: 35px; /* Размер круга, в котором будет изображение */
+        height: 35px;
+        overflow: hidden;
+        border-radius: 50%; /* Делаем круглое изображение */
+        margin: 0 auto; /* Центрируем круг по горизонтали */
+    }
+
+    .user-avatar-2 {
+        width: 100%; /* Заполняем всю ширину круга изображением */
+        height: auto; /* Автоматический расчет высоты */
+        display: block; /* Убираем пустые промежутки */
+    }
+
+    .user-name {
+        margin-top: 5px; /* Отступ между изображением и именем */
+    }
+    .user-avatar-wrapper {
+        width: 100px; /* Размер круга, в котором будет изображение */
+        height: 100px;
+        overflow: hidden;
+        border-radius: 50%; /* Делаем круглое изображение */
+        margin: 0 auto; /* Центрируем круг по горизонтали */
+    }
+    
+    .user-avatar {
+        width: 100%; /* Заполняем всю ширину круга изображением */
+        height: auto; /* Автоматический расчет высоты */
+        display: block; /* Убираем пустые промежутки */
+        object-fit: cover; /* Подгоняем изображение под размеры круга */
+    }
+    
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="{{url_for('__app__')}}">TEMA</a>
+    <a class="navbar-brand" href="{{url_for('logout')}}">Logout</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+        
+  
+        
+        <li>
+            <div class="user-container-2">
+                <a class="w3-bar-item w3-button user" id="*{{user.id}}" style='text-decoration: none; display: inline-block;'>
+                    <div class="user-avatar-wrapper-2">
+                        <img class='user-avatar-2' src="{{url_for('static', filename='imgs/' + user.image_file)}}">
+                    </div>
+                    <div class="user-name">{{user.name}}</div>
+                </a>
+            </div>
+        </li>
+  
+  
+      </ul>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+  
+  
+  
+  
+  
+  
+
+  <div class="centered-container">
+    <div class="profile-container">
+        <div class="profile-card">
+
+            <h1 class="profile-title">Профиль пользователя</h1>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+            {% endfor %}
+
+
+
+            <div class="profile-info">
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Имя:</span>
+                    <span class="profile-info-value">{{ user.first_name }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Фамилия:</span>
+                    <span class="profile-info-value">{{ user.last_name }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Имя пользователя:</span>
+                    <span class="profile-info-value">{{ user.username }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Email:</span>
+                    <span class="profile-info-value">{{ user.email }}</span>
+                </div>
+
+
+                <div class="profile-actions">
+                    {#кнопка "Редактировать профиль" должна вызывать функцию, которая показывает модальное окно#}
+                    <!-- Добавьте кнопку с вызовом функции showModal() -->
+                    <a href="#" class="btn btn-warning" onclick="showModal()">Редактировать профиль</a>
+
+                    <div id="edit-profile-modal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <div id="edit-profile-content"></div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-danger" id="delete-profile-btn">Удалить профиль</a>
+                
+
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="user-avatar-wrapper">
+                <img class="user-avatar" src="{{ url_for('static', filename='imgs/' + user.image_file) }}">
+            </div>
+
+
+            <div class="profile-upload">
+                <form id="profile-upload-form" action="{{ url_for('upload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Изменить аватар:</label>
+                        <input type="file" name="file" id="profile-file-input" class="form-control-file">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Загрузить" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        
+
+        </div>
+
+    <div>
+        <!-- Кнопки JSON API -->
+        <div class="d-flex justify-content-between json-api-buttons">
+            <button id="show-json-btn" class="btn btn-primary">JSON API запрос</button>
+            <button id="hide-json-btn" class="btn btn-secondary">Скрыть JSON</button>
+        </div>
+        <div id="json-output" class="mt-3" style="display: none;"></div>
+    </div>
+
+    <!-- Дополнительное окно для JSON-ответа -->
+    <div class="profile-json-window">
+
+        <pre id="json-window-output" class="mt-3" style="display: none;"></pre>
+    </div>
+
+
+</div>
+
+<script>
+    // JavaScript код для обновления предварительного просмотра аватара при выборе файла
+    document.getElementById('profile-file-input').addEventListener('change', function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var img = document.getElementById('profile-avatar-img');
+            img.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+
+
+<script>
+    document.getElementById('show-json-btn').addEventListener('click', function () {
+        var jsonOutput = document.getElementById('json-output');
+        jsonOutput.style.display = 'block';
+
+        fetch('/json_route') // Выполняем GET-запрос к URL '/json_route'
+            .then(response => response.json()) // Преобразуем ответ в JSON
+            .then(data => {
+                // Выводим полученные JSON-данные в элемент 'json-output'
+                jsonOutput.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.log('Ошибка:', error);
+            });
+    });
+
+    document.getElementById('hide-json-btn').addEventListener('click', function () {
+        document.getElementById('json-output').style.display = 'none';
+    });
+</script>
+
+<script>
+
+
+    // Редактировать
+    // Редактировать
+    // Редактировать
+    // Редактировать
+    // Редактировать
+    // Функция для отображения модального окна edit
+    function showModal() {
+        var modal = document.getElementById('edit-profile-modal');
+        modal.style.display = "block";
+        loadEditProfileForm(); // Загружаем содержимое формы редактирования профиля
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal() {
+        var modal = document.getElementById('edit-profile-modal');
+        modal.style.display = "none";
+    }
+
+
+    // Функция для загрузки формы редактирования профиля
+    // loadEditProfileForm() для обработки ответа от сервери вставки содержимого формы в модальное окно:
+    function loadEditProfileForm() {
+        var editProfileContent = document.getElementById('edit-profile-content');
+        editProfileContent.innerHTML = ''; // Очищаем содержимое
+
+        // Загружаем содержимое формы редактирования профиля с помощью AJAX запроса
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', `{{ url_for('edit_profile') }}`);
+
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                editProfileContent.innerHTML = xhr.responseText;
+                initializeEditProfileForm(); // Инициализируем форму редактирования профиля
+            }
+        };
+        xhr.send();
+    }
+
+    // Функция для инициализации формы редактирования профиля
+    //initializeEditProfileForm(), которая будет обрабатывать отправку
+    // формы редактирования профиля и отправлять ее содержимое на сервер:
+    function initializeEditProfileForm() {
+        var editProfileForm = document.getElementById('edit-profile-form');
+        editProfileForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Отменяем отправку формы по умолчанию
+
+            var formData = new FormData(editProfileForm); // Создаем объект FormData с данными формы
+
+            // Отправляем данные формы на сервер с помощью AJAX запроса
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', `{{ url_for('edit_profile') }}`);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.message === 'Профиль успешно обновлен') {
+                        closeModal(); // Закрываем модальное окно
+                        location.reload(); // Перезагружаем страницу профиля
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    }
+
+
+</script>
+
+
+<script>
+    // JavaScript код для обработки нажатия кнопки "Удалить профиль"
+    document.getElementById('delete-profile-btn').addEventListener('click', function (event) {
+        event.preventDefault(); // Предотвращаем переход по ссылке
+
+        if (confirm('Вы действительно хотите удалить профиль?')) {
+            // Создаем новый AJAX-запрос
+            var xhr = new XMLHttpRequest();
+            xhr.open(
+                'POST', `{{ url_for('delete_profile') }}`, true);
+
+
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Обработка успешного ответа от сервера
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Профиль успешно удален, перенаправляем пользователя на страницу регистрации
+                        window.location.href = `{{ url_for('register') }}`;
+
+                    } else {
+                        // Произошла ошибка при удалении профиля, выводим сообщение об ошибке
+                        alert(response.message);
+                    }
+                }
+            };
+            xhr.send(); // Отправляем запрос на удаление профиля
+        }
+    });
+
+</script>
+
+{% endblock %}
